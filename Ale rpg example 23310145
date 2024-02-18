@@ -1,0 +1,42 @@
+#include <iostream>
+
+struct Personaje {
+    std::string nombre;
+    int salud;
+    int fuerza;
+    int defensa;
+};
+
+void Ataque(Personaje& atacante, Personaje& defensor) {
+    int daño = atacante.fuerza - defensor.defensa;
+    defensor.salud -= daño > 0 ? daño : 0;
+    std::cout << atacante.nombre << " apuñala a " << defensor.nombre << "." << std::endl;
+}
+
+int main() {
+    srand(time(nullptr));
+
+    Personaje jugador1 = {"Pepito", 100, 20, 10};
+    Personaje jugador2 = {"Ale", 80, 25, 5};
+
+    std::cout << "Comienza la pelea de cuchillos entre " << jugador1.nombre << " y " << jugador2.nombre << "!" << std::endl;
+    std::cout << std::endl;
+
+    while (jugador1.salud > 0 && jugador2.salud > 0) {
+  Ataque(jugador1, jugador2);
+        if (jugador2.salud <= 0) break;
+  Ataque(jugador2, jugador1);
+        if (jugador1.salud <= 0) break;
+        std::cout << std::endl;
+    }
+
+    if (jugador1.salud <= 0 && jugador2.salud <= 0) {
+        std::cout << "La pelea terminó en empate!" << std::endl;
+    } else if (jugador1.salud <= 0) {
+        std::cout << jugador2.nombre << " ha ganado la pelea!" << std::endl;
+    } else {
+        std::cout << jugador1.nombre << " ha ganado la pelea!" << std::endl;
+    }
+
+    return 0;
+}
